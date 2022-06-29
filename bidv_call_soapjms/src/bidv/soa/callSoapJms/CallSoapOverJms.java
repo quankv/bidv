@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import bidv.soa.ach247.inquiry.InquiryInfoAccount;
 import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
+import bidv.soa.sibs.BIDVCash.VaultInquiry.VaultInquiry;
 import bidv.soa.sibs.LNAccount.ACFDetail.ACFDetail;
 import bidv.soa.sibs.LNAccount.ACFDetail.BodyReqType;
 import bidv.soa.sibs.LNAccount.CreateAcc.CreateAcc;
@@ -48,6 +49,9 @@ public class CallSoapOverJms {
 				break;
 			case "sibs_LNAccount_DisbValue":
 				resp = DisbValue.callDisbValue(jsonConfig, jsonBody);
+				break;
+			case "sibs_BIDVCash_VaultInquiry":
+				resp = VaultInquiry.callVaultInquiry(jsonConfig, jsonBody);
 				break;
 			default:
 				break;
