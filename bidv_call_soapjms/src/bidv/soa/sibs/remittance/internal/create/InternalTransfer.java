@@ -1,4 +1,4 @@
-package bidv.soa.sibs.BIDVCash.VaultInquiry;
+package bidv.soa.sibs.remittance.internal.create;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -30,20 +30,22 @@ import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
 
-public class VaultInquiry {
+public class InternalTransfer {
 	public static void main(String[] args) {
 		InfoConfigSOA infoConfig = new InfoConfigSOA();
-		infoConfig.setUrlConnect("tcp://10.53.19.15:7222");// fix cung
+		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");// fix cung
 		infoConfig.setUserConnect("admin");// fix cung
-		infoConfig.setPassConnect("");// fix cung
+		infoConfig.setPassConnect("123456");// fix cung
 		infoConfig.setAppCode("BPM");// fix cung
 		infoConfig.setDeviceId("CHANNEL");// k quan trong
 		infoConfig.setBusinessDomain("BIDV.COM.VN");// fix cung
 		infoConfig.setServiceVersion("1.0");// fix cung
-		infoConfig.setQueueName("vn.bidvcash.1.0");// trong file wsdl
+		infoConfig.setQueueName("vn.internalfundxfer.1.0");// trong file wsdl
 		infoConfig.setSoapActionInWSDL(
-				"/Services/Global/Vn/BIDVCash/OperationImpl/BIDVCash-service0.serviceagent/PortTypeEndpoint0/vaultInquiry");// trong file wsdl
-		BodyReqInquiryType body = new BodyReqInquiryType();
+				"global/vn/remittance/internalfundxfer/1.0");// trong
+																												// file
+																												// wsdl
+		BodyReqCreateType body = new BodyReqCreateType();
 
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(),
 				infoConfig.getPassConnect());
@@ -52,7 +54,7 @@ public class VaultInquiry {
 			return;
 		}
 
-		VaultInquiry cus = new VaultInquiry();
+		InternalTransfer cus = new InternalTransfer();
 		try {
 			String appCode = infoConfig.getAppCode();
 			String deviceId = infoConfig.getDeviceId();
@@ -66,7 +68,7 @@ public class VaultInquiry {
 
 	}
 
-	public static String callVaultInquiry(String jsonConfig, String jsonBody) throws Exception {
+	public static String transfer(String jsonConfig, String jsonBody) throws Exception{
 		String response = "";
 		if (jsonConfig != null && !"".equals(jsonConfig) && jsonBody != null && !"".equals(jsonBody)) {
 			InfoConfigSOA infoConfig = new InfoConfigSOA();
@@ -78,13 +80,13 @@ public class VaultInquiry {
 				System.out.println("Error connect JMS");
 				return "Error connect JMS";
 			}
-			VaultInquiry cus = new VaultInquiry();
+			InternalTransfer cus = new InternalTransfer();
 
 			String appCode = infoConfig.getAppCode();
 			String deviceId = infoConfig.getDeviceId();
 			String requestId = genReqId(appCode, deviceId);
-			BodyReqInquiryType body = new BodyReqInquiryType();
-			body = g.fromJson(jsonBody, BodyReqInquiryType.class);
+			BodyReqCreateType body = new BodyReqCreateType();
+			body = g.fromJson(jsonBody, BodyReqCreateType.class);
 			response = cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body,
 					infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
 
@@ -98,10 +100,10 @@ public class VaultInquiry {
 
 	}
 
-	public String get(String messID, String soaappcode, String domain, String version, BodyReqInquiryType body,
+	public String get(String messID, String soaappcode, String domain, String version, BodyReqCreateType body,
 			String queueName, String soapActionInWSDL) {
 		String response = "";
-		BIDVCashReqType obj = new BIDVCashReqType();
+		InternalFundXferReqType obj = new InternalFundXferReqType();
 		HeaderType header = new HeaderType();
 		CommonType common = new CommonType();
 		ClientType client = new ClientType();
@@ -122,9 +124,9 @@ public class VaultInquiry {
 		header.setCommon(common);
 		header.setClient(client);
 		obj.setHeader(header);
-		obj.setBodyReqInquiry(body);
+		obj.setBodyReqCreate(body);
 
-		SOARequestObject genSOAMsgObj = soaReqestReply.GenerateSOAMessage(BIDVCashReqType.class, obj);
+		SOARequestObject genSOAMsgObj = soaReqestReply.GenerateSOAMessage(InternalFundXferReqType.class, obj);
 
 		System.out.println(genSOAMsgObj.getRequestmsg());
 

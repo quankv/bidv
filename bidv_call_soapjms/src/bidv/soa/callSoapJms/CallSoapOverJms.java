@@ -11,6 +11,7 @@ import bidv.soa.sibs.LNAccount.CreateAcc.CreateAcc;
 import bidv.soa.sibs.LNAccount.DisbValueDateFile.DisbValue;
 import bidv.soa.sibs.LNAccount.LNAccountDeleteAcc.LNAccountDeleteAcc;
 import bidv.soa.sibs.LNAccount.MasterAANoInq.MasterAANoInq;
+import bidv.soa.sibs.remittance.internal.create.InternalTransfer;
 
 public class CallSoapOverJms {
 	public static void main(String args[]) {
@@ -28,7 +29,7 @@ public class CallSoapOverJms {
 		call_api(new Gson().toJson(infoConfig), new Gson().toJson(body), "sibs_LNAccount_ACFDetail");
 	}
 	public static String call_api(String jsonConfig, String jsonBody, String serviceType) {
-		System.out.println("=============start call soap over jms================");
+		System.out.println("=============start call soap over jms================"+serviceType);
 		String resp = "";
 		try {
 			switch (serviceType) {
@@ -53,15 +54,18 @@ public class CallSoapOverJms {
 			case "sibs_BIDVCash_VaultInquiry":
 				resp = VaultInquiry.callVaultInquiry(jsonConfig, jsonBody);
 				break;
+			case "sibs_Remittance_InternalTransfer":
+				resp = InternalTransfer.transfer(jsonConfig, jsonBody);
+				break;
 			default:
 				break;
 			}
 		} catch (Exception e) {
-			System.out.println("=============call soap over jms-->error================");
+			System.out.println("=============call soap over jms-->error================"+serviceType);
 			System.out.println(e.getMessage());
 			resp = e.getMessage();
 		}
-		System.out.println("=============end call soap over jms================");
+		System.out.println("=============end call soap over jms================"+serviceType);
 		return resp;
 	}
 }
