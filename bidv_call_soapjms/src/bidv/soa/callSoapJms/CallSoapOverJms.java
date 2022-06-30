@@ -11,6 +11,7 @@ import bidv.soa.sibs.LNAccount.CreateAcc.CreateAcc;
 import bidv.soa.sibs.LNAccount.DisbValueDateFile.DisbValue;
 import bidv.soa.sibs.LNAccount.LNAccountDeleteAcc.LNAccountDeleteAcc;
 import bidv.soa.sibs.LNAccount.MasterAANoInq.MasterAANoInq;
+import bidv.soa.sibs.remittance.domesticXfer.create.DomesticXfer;
 import bidv.soa.sibs.remittance.internal.create.InternalTransfer;
 
 public class CallSoapOverJms {
@@ -56,6 +57,9 @@ public class CallSoapOverJms {
 				break;
 			case "sibs_Remittance_InternalTransfer":
 				resp = InternalTransfer.transfer(jsonConfig, jsonBody);
+				break;
+			case "sibs_Remittance_DomesticXfer":
+				resp = DomesticXfer.transfer(jsonConfig, jsonBody);
 				break;
 			default:
 				break;
