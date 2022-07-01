@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
-@XmlRootElement(name = "EcmDigitizationServiceRes", namespace = "http://www.bidv.com/global/vn/apps/ecm/ecmdigitizationservice/1.0")
+@XmlRootElement(name = "EcmInternalDigitizationRes", namespace = "http://www.bidv.com/global/vn/apps/ecm/ecmdigitizationservice/1.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "EcmDigitizationServiceResType", namespace = "http://www.bidv.com/global/vn/apps/ecm/ecmdigitizationservice/1.0", propOrder = {
     "bodyResEcmDigitizationService"

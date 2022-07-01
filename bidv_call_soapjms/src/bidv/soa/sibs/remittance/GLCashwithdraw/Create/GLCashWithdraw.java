@@ -1,4 +1,4 @@
-package soa.apps.ecm.approvalDocument;
+package bidv.soa.sibs.remittance.GLCashwithdraw.Create;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -22,81 +22,88 @@ import org.json.XML;
 
 import com.google.gson.Gson;
 
-import soa.common.ClientType;
-import soa.common.CommonType;
-import soa.common.HeaderType;
-import soa.common.InfoConfigSOA;
+import bidv.soa.common.serviceEnvelope.ClientType;
+import bidv.soa.common.serviceEnvelope.CommonType;
+import bidv.soa.common.serviceEnvelope.HeaderType;
+import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
+import bidv.soa.common.serviceEnvelope.SOARequestObject;
+import bidv.soa.common.serviceEnvelope.SOAResponeObject;
+import bidv.soa.common.serviceEnvelope.soaReqestReply;
 
-public class ApprovalDocument {
-
+public class GLCashWithdraw {
 	public static void main(String[] args) {
 		InfoConfigSOA infoConfig = new InfoConfigSOA();
-		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");
-		infoConfig.setUserConnect("admin");
-		infoConfig.setPassConnect("123456");
-		infoConfig.setAppCode("BPM");
-		infoConfig.setDeviceId("CHANNEL");
-		infoConfig.setBusinessDomain("BIDV.COM.VN");
-		infoConfig.setServiceVersion("1.0");
-		infoConfig.setQueueName("vn.apps.ecmapi.1.0");
-		infoConfig.setSoapActionInWSDL("/Services/Global/Vn/Apps/ECM/OperationImpl/ECMService.serviceagent//ApproveDocument");
-		BodyReqApproveDocumentType body = new BodyReqApproveDocumentType();
-		body.setCustomerType("2");
-		body.setTransactionId("43243");
-		int errcode = soa.common.soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(), infoConfig.getPassConnect());
+		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");// fix cung
+		infoConfig.setUserConnect("admin");// fix cung
+		infoConfig.setPassConnect("123456");// fix cung
+		infoConfig.setAppCode("BPM");// fix cung
+		infoConfig.setDeviceId("CHANNEL");// k quan trong
+		infoConfig.setBusinessDomain("BIDV.COM.VN");// fix cung
+		infoConfig.setServiceVersion("1.0");// fix cung
+		infoConfig.setQueueName("vn.glcashwithdraw.1.0");// trong file wsdl
+		infoConfig.setSoapActionInWSDL(
+				"/Services/Global/Vn/Remittance/GLCashWithdraw/OperationImpl/GLCashWithdraw.serviceagent/PortTypeEndpoint1/Create");// trong
+																												// file
+																												// wsdl
+		BodyReqCreateType body = new BodyReqCreateType();
+
+		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(),
+				infoConfig.getPassConnect());
 		if (errcode != 0) {
 			System.out.println("Error connect JMS");
 			return;
 		}
 
-		ApprovalDocument cus = new ApprovalDocument();
+		GLCashWithdraw cus = new GLCashWithdraw();
 		try {
 			String appCode = infoConfig.getAppCode();
 			String deviceId = infoConfig.getDeviceId();
 			String requestId = genReqId(appCode, deviceId);
-			cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body, infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
+			cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body,
+					infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		soa.common.soaReqestReply.CloseSOAConnection();
+		soaReqestReply.CloseSOAConnection();
 
 	}
-	public static String callApproveDocument(String jsonConfig, String jsonBody) {
+
+	public static String transfer(String jsonConfig, String jsonBody) throws Exception{
 		String response = "";
-		if(jsonConfig != null && !"".equals(jsonConfig) && jsonBody != null && !"".equals(jsonBody) ) {
+		if (jsonConfig != null && !"".equals(jsonConfig) && jsonBody != null && !"".equals(jsonBody)) {
 			InfoConfigSOA infoConfig = new InfoConfigSOA();
-			Gson g = new Gson(); 
+			Gson g = new Gson();
 			infoConfig = g.fromJson(jsonConfig, InfoConfigSOA.class);
-			int errcode = soa.common.soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(), infoConfig.getPassConnect());
+			int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(),
+					infoConfig.getPassConnect());
 			if (errcode != 0) {
 				System.out.println("Error connect JMS");
 				return "Error connect JMS";
 			}
+			GLCashWithdraw cus = new GLCashWithdraw();
 
-			ApprovalDocument cus = new ApprovalDocument();
-			try {
-				String appCode = infoConfig.getAppCode();
-				String deviceId = infoConfig.getDeviceId();
-				String requestId = genReqId(appCode, deviceId);
-				BodyReqApproveDocumentType body = new BodyReqApproveDocumentType();
-				body = g.fromJson(jsonBody, BodyReqApproveDocumentType.class);
-				response = cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body, infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
-			} catch (Exception e) {
-				e.printStackTrace();
-				response = e.getMessage();
-			}
-			soa.common.soaReqestReply.CloseSOAConnection();
+			String appCode = infoConfig.getAppCode();
+			String deviceId = infoConfig.getDeviceId();
+			String requestId = genReqId(appCode, deviceId);
+			BodyReqCreateType body = new BodyReqCreateType();
+			body = g.fromJson(jsonBody, BodyReqCreateType.class);
+			response = cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body,
+					infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
+
+			soaReqestReply.CloseSOAConnection();
 		}
 		return response;
 	}
+
 	private static String genReqId(String appcode, String deviceId) {
 		return MessageFormat.format("{0}-{1}-{2}", appcode, deviceId, String.valueOf(System.currentTimeMillis()));
 
 	}
 
-	public String get(String messID, String soaappcode, String domain, String version, BodyReqApproveDocumentType body, String queueName, String soapAction) {
+	public String get(String messID, String soaappcode, String domain, String version, BodyReqCreateType body,
+			String queueName, String soapActionInWSDL) {
 		String response = "";
-		ApproveDocumentReqType obj = new ApproveDocumentReqType();
+		GLCashWithdrawReqType obj = new GLCashWithdrawReqType();
 		HeaderType header = new HeaderType();
 		CommonType common = new CommonType();
 		ClientType client = new ClientType();
@@ -116,23 +123,20 @@ public class ApprovalDocument {
 		client.setSourceAppID(soaappcode);
 		header.setCommon(common);
 		header.setClient(client);
-		obj.setHeader(header); 
-		obj.setBodyReqApproveDocument(body);
+		obj.setHeader(header);
+		obj.setBodyReqCreate(body);
 
-		soa.common.SOARequestObject genSOAMsgObj = soa.common.soaReqestReply.GenerateSOAMessage(ApproveDocumentReqType.class,
-				obj);
+		SOARequestObject genSOAMsgObj = soaReqestReply.GenerateSOAMessage(GLCashWithdrawReqType.class, obj);
 
 		System.out.println(genSOAMsgObj.getRequestmsg());
 
 		int timeOut = 100000; // minisecond
-		//String queueName = "vn.cardgw.1.0";
-		String soapActionInWSDL = soapAction;//"/Services/Global/Vn/Apps/CARDGW/OperationImpl/CardGW-service.serviceagent//CardDetail";
-		soa.common.SOAResponeObject outputObj = soa.common.soaReqestReply.ProcessSOAService(queueName, soapActionInWSDL,
-				genSOAMsgObj.getRequestmsg(), timeOut); 
+		SOAResponeObject outputObj = soaReqestReply.ProcessSOAService(queueName, soapActionInWSDL,
+				genSOAMsgObj.getRequestmsg(), timeOut);
 		try {
 			String xml = printXml(outputObj.getResponsemsg());
 			response = XML.toJSONObject(xml).toString();
-			System.out.println("jsonResp\n"+ response);
+			System.out.println("jsonResp\n" + response);
 		} catch (JSONException e) {
 			response = e.getMessage();
 			e.printStackTrace();
@@ -147,10 +151,10 @@ public class ApprovalDocument {
 
 	private String printXml(String str) {
 		try {
-			str = str.replaceAll("ns0:", "").replaceAll("ns1:", "").replaceAll("ns2:", "");
-			str = str.replace("xmlns:ns0=\"http://www.bidv.com/global/vn/apps/ecm/approvedocument/1.0\"", "");
-			str = str.replace("xmlns:ns1=\"http://www.bidv.com/common/envelope/commonheader/1.0\"", "");
-			str = str.replace("xmlns:ns2=\"http://www.bidv.com/common/envelope/commonheader/1.0\"", "");
+//			str = str.replaceAll("ns0:", "").replaceAll("ns1:", "").replaceAll("ns2:", "");
+//			str = str.replace("xmlns:ns0=\"http://www.bidv.com/entity/vn/apps/cardgw/carddetail/1.0\"", "");
+//			str = str.replace("xmlns:ns1=\"http://www.bidv.com/common/envelope/commonheader/1.0\"", "");
+//			str = str.replace("xmlns:ns2=\"http://www.bidv.com/common/envelope/commonheader/1.0\"", "");
 			Source xmlInput = new StreamSource(new StringReader(str));
 			Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -163,5 +167,4 @@ public class ApprovalDocument {
 			return "ERROR PRINT XML:" + str;
 		}
 	}
-
 }

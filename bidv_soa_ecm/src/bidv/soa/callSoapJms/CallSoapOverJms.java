@@ -3,6 +3,7 @@ package bidv.soa.callSoapJms;
 
 import soa.apps.ecm.approvalDocument.ApprovalDocument;
 import soa.apps.ecm.digitizationservice.CallECMDigitizationService;
+import soa.apps.ecm.getListDocumentCrom.GetListDocumentCrom;
 import soa.common.InfoConfigSOA;
 
 public class CallSoapOverJms {
@@ -30,6 +31,9 @@ public class CallSoapOverJms {
 				break;
 			case "ECM_ApprovalDoc":
 				resp = ApprovalDocument.callApproveDocument(jsonConfig, jsonBody);
+				break;
+			case "ECM_GetDocumentCrom":
+				resp = GetListDocumentCrom.getDocFromCrom(jsonConfig, jsonBody);
 				break;
 			default:
 				break;

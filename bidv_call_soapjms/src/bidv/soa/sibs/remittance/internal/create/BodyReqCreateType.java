@@ -11,6 +11,7 @@ package bidv.soa.sibs.remittance.internal.create;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import bidv.soa.common.sibs.account.AcctInfoType;
@@ -55,6 +56,8 @@ import bidv.soa.common.sibs.bank.VATInfo;
  * 
  * 
  */
+
+@XmlRootElement(name = "BodyReqCreate", namespace = "http://www.bidv.com/entity/vn/remittance/internalfundxfer/create/1.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BodyReqCreateType", namespace = "http://www.bidv.com/entity/vn/remittance/internalfundxfer/create/1.0", propOrder = {
     "msgCode",

@@ -6,7 +6,7 @@
 //
 
 
-package bidv.soa.common.serviceEnvelope;
+package bidv.soa.sibs.remittance.GLCashwithdraw.Create;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for NameValuePairsType complex type.
+ * <p>Java class for RemtterFeeInfo complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="NameValuePairsType">
+ * &lt;complexType name="RemtterFeeInfo">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Value" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="RemtterAmt" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="RemtterCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,63 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "NameValuePairsType", namespace = "http://www.bidv.com/common/envelope/commonheader/1.0", propOrder = {
-    "name",
-    "value"
+@XmlType(name = "RemtterFeeInfo", propOrder = {
+    "remtterAmt",
+    "remtterCode"
 })
-public class NameValuePairsType {
+public class RemtterFeeInfo {
 
-    @XmlElement(name = "Name", required = true)
-    protected String name;
-    @XmlElement(name = "Value", required = true)
-    protected String value;
+    @XmlElement(name = "RemtterAmt", required = true)
+    protected String remtterAmt;
+    @XmlElement(name = "RemtterCode")
+    protected String remtterCode;
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the remtterAmt property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getName() {
-        return name;
+    public String getRemtterAmt() {
+        return remtterAmt;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the remtterAmt property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setRemtterAmt(String value) {
+        this.remtterAmt = value;
     }
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the remtterCode property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getValue() {
-        return value;
+    public String getRemtterCode() {
+        return remtterCode;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the value of the remtterCode property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setValue(String value) {
-        this.value = value;
+    public void setRemtterCode(String value) {
+        this.remtterCode = value;
     }
 
 }

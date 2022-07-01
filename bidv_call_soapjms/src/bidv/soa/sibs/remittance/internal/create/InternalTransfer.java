@@ -29,6 +29,8 @@ import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
 import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
+import bidv.soa.common.sibs.account.AcctInfoType;
+import bidv.soa.common.sibs.account.AmtType;
 
 public class InternalTransfer {
 	public static void main(String[] args) {
@@ -46,7 +48,25 @@ public class InternalTransfer {
 																												// file
 																												// wsdl
 		BodyReqCreateType body = new BodyReqCreateType();
-
+		AcctInfoType acctInfoType = new AcctInfoType();
+		acctInfoType.setAcctNo("280701003");
+		acctInfoType.setAcctType("GL");
+		acctInfoType.setBranchNo("120");
+		acctInfoType.setCurCode("VND");
+		
+		body.setAcctFrom(acctInfoType);
+		body.setMsgCode("032");
+		AmtType amt = new AmtType();
+		amt.setAmt("100000");
+		amt.setCurCode("VND");
+		body.setAmt(amt);
+		
+		AcctInfoType accountTo = new AcctInfoType();
+		accountTo.setAcctNo("26010000018150");
+		accountTo.setAcctType("CA");
+		accountTo.setCurCode("VND");
+		body.setAcctTo(accountTo);
+		body.setRemark("GN");
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(),
 				infoConfig.getPassConnect());
 		if (errcode != 0) {

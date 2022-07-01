@@ -5,5 +5,5 @@
 // Generated on: 2022.05.17 at 09:22:32 AM ICT 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.bidv.com/global/vn/apps/ecm/ecmdigitizationservice/1.0", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package soa.apps.ecm.digitizationservice;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.bidv.com/global/vn/apps/ecm/approvedocument/1.0", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+package soa.apps.ecm.approvalDocument;

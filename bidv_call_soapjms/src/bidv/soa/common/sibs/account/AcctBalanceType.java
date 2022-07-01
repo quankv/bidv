@@ -11,6 +11,7 @@ package bidv.soa.common.sibs.account;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
+@XmlRootElement(name = "AcctBalance", namespace = "http://www.bidv.com/global/common/account/1.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AcctBalanceType", namespace = "http://www.bidv.com/global/common/account/1.0", propOrder = {
     "balAmt",

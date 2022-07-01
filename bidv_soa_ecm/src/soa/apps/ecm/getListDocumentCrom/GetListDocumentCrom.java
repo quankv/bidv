@@ -1,4 +1,4 @@
-package soa.apps.ecm.digitizationservice;
+package soa.apps.ecm.getListDocumentCrom;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -22,109 +22,37 @@ import org.json.XML;
 
 import com.google.gson.Gson;
 
-import soa.apps.ecm.digitizationservice.BodyReqEcmDigitizationServiceType.CaptType;
-import soa.apps.ecm.digitizationservice.BodyReqEcmDigitizationServiceType.CardType;
-import soa.apps.ecm.digitizationservice.BodyReqEcmDigitizationServiceType.CustomerType;
-import soa.apps.ecm.digitizationservice.BodyReqEcmDigitizationServiceType.ServiceType;
 import soa.common.ClientType;
 import soa.common.CommonType;
 import soa.common.HeaderType;
 import soa.common.InfoConfigSOA;
 
-public class CallECMDigitizationService {
+public class GetListDocumentCrom {
 
 	public static void main(String[] args) {
 		InfoConfigSOA infoConfig = new InfoConfigSOA();
 		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");
 		infoConfig.setUserConnect("admin");
 		infoConfig.setPassConnect("123456");
-		infoConfig.setAppCode("BPM");
+		infoConfig.setAppCode("OMNI");
 		infoConfig.setDeviceId("CHANNEL");
 		infoConfig.setBusinessDomain("BIDV.COM.VN");
 		infoConfig.setServiceVersion("1.0");
 		infoConfig.setQueueName("vn.apps.ecmapi.1.0");
-		infoConfig.setSoapActionInWSDL("http://www.bidv.com/global/vn/apps/ecm/ecmDigitization");
-		BodyReqEcmDigitizationServiceType body = new BodyReqEcmDigitizationServiceType();
-		body.setAccessToken("");
-		body.setAppCode("BPM");
-		body.setChecksum("");
-		body.setRequestID("");
-		body.setBranchCreated("129");
-		body.setRelatedBranch("");
-		body.setTransactionId("35345");
-		body.setDocumentTypeId("010101");
-		body.setCreateBySystem("");
-		body.setEcmDateCreated("");
-		body.setEcmUserCreated("1214");
-		body.setApprover("");
-		body.setDateApprove("");
-		body.setFileInput("{3047AD81-0000-CE1D-9DEA-2A563EB54F5E}");
-		body.setEType("ecmCustomerSME");
-
-		CustomerType cusType = new CustomerType();
-		cusType.setCifNumber("12345");
-		cusType.setBdsCreated("129");
-		cusType.setAuthorizationLimit("");
-		cusType.setAuthorizedPerson("");
-		cusType.setDocDate("");
-		cusType.setDocEffectiveDate("");
-		cusType.setDocNumber("");
-		cusType.setDocValidityPeriod("");
-		cusType.setDocumentStatus("");
-		cusType.setExpireDate("");
-		cusType.setExpiryDate("");
-		cusType.setScopeOfAuthorized("");
-		cusType.setSignerName("");
-
-		ServiceType serType = new ServiceType();
-		serType.setCifNumber("");
-		serType.setBdsCreated("");
-		serType.setDocEffectiveDate("");
-		serType.setDocValidityPeriod("");
-		serType.setDocumentStatus("");
-		serType.setExpiryDate("");
-		//
-		CardType cardType = new CardType();
-		cardType.setCifNumber("");
-		cardType.setBdsCreated("");
-		cardType.setCardNumber("");
-		cardType.setCardType("");
-		cardType.setProductNumber("");
-		cardType.setPrimaryCard("");
-		cardType.setSecondaryCard("");
-		cardType.setStaffNumber("");
-		cardType.setPosUnitNumber("");
-		cardType.setExpiryDate("");
-		//
-		CaptType captType = new CaptType();
-		captType.setCifNumber("");
-		captType.setBdsCreated("");
-		captType.setTradeDate("");
-		captType.setValueDate("");
-		captType.setTypeOfDeal("");
-		captType.setTypeOfInstr("");
-		captType.setFoDealId("");
-		captType.setPaymentID("");
-		captType.setAccountingID("");
-		captType.setCurrency("");
-		captType.setEndDate("");
-		captType.setActionDate("");
-		captType.setAmount("");
-		captType.setTransferID("");
-		//
-
-		body.setCustomerType(cusType);
-		body.setServiceType(serType);
-		body.setCardType(cardType);
-		body.setCaptType(captType);
-//		int errcode = soa.common.soaReqestReply.InitSOAConnection("tcp://119.17.209.146:7222", "admin", "123456");
+		infoConfig.setSoapActionInWSDL("/Services/Global/Vn/Apps/ECM/OperationImpl/ECMService.serviceagent//GetListDocumentFromCROM");
+		
+		BodyReqGetListDocumentFromCROMType body = new BodyReqGetListDocumentFromCROMType();
+		body.setCif("12323");
+		body.setDocumentType("010101");
+		body.setFromDate("20/04/2022");
+		body.setToDate("20/06/2022");
 		int errcode = soa.common.soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(), infoConfig.getPassConnect());
 		if (errcode != 0) {
 			System.out.println("Error connect JMS");
 			return;
 		}
 
-		CallECMDigitizationService cus = new CallECMDigitizationService();
+		GetListDocumentCrom cus = new GetListDocumentCrom();
 		try {
 			String appCode = infoConfig.getAppCode();
 			String deviceId = infoConfig.getDeviceId();
@@ -136,7 +64,7 @@ public class CallECMDigitizationService {
 		soa.common.soaReqestReply.CloseSOAConnection();
 
 	}
-	public static String CallECMDigitization(String jsonConfig, String jsonBody) {
+	public static String getDocFromCrom(String jsonConfig, String jsonBody) {
 		String response = "";
 		if(jsonConfig != null && !"".equals(jsonConfig) && jsonBody != null && !"".equals(jsonBody) ) {
 			InfoConfigSOA infoConfig = new InfoConfigSOA();
@@ -148,13 +76,13 @@ public class CallECMDigitizationService {
 				return "Error connect JMS";
 			}
 
-			CallECMDigitizationService cus = new CallECMDigitizationService();
+			GetListDocumentCrom cus = new GetListDocumentCrom();
 			try {
 				String appCode = infoConfig.getAppCode();
 				String deviceId = infoConfig.getDeviceId();
 				String requestId = genReqId(appCode, deviceId);
-				BodyReqEcmDigitizationServiceType body = new BodyReqEcmDigitizationServiceType();
-				body = g.fromJson(jsonBody, BodyReqEcmDigitizationServiceType.class);
+				BodyReqGetListDocumentFromCROMType body = new BodyReqGetListDocumentFromCROMType();
+				body = g.fromJson(jsonBody, BodyReqGetListDocumentFromCROMType.class);
 				response = cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body, infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -169,9 +97,9 @@ public class CallECMDigitizationService {
 
 	}
 
-	public String get(String messID, String soaappcode, String domain, String version, BodyReqEcmDigitizationServiceType body, String queueName, String soapAction) {
+	public String get(String messID, String soaappcode, String domain, String version, BodyReqGetListDocumentFromCROMType body, String queueName, String soapAction) {
 		String response = "";
-		EcmDigitizationServiceReqType obj = new EcmDigitizationServiceReqType();
+		GetListDocumentFromCROMReqType obj = new GetListDocumentFromCROMReqType();
 		HeaderType header = new HeaderType();
 		CommonType common = new CommonType();
 		ClientType client = new ClientType();
@@ -192,9 +120,9 @@ public class CallECMDigitizationService {
 		header.setCommon(common);
 		header.setClient(client);
 		obj.setHeader(header); 
-		obj.setBodyReqEcmDigitizationService(body);
+		obj.setBodyReqGetListDocumentFromCROM(body);
 
-		soa.common.SOARequestObject genSOAMsgObj = soa.common.soaReqestReply.GenerateSOAMessage(EcmDigitizationServiceReqType.class,
+		soa.common.SOARequestObject genSOAMsgObj = soa.common.soaReqestReply.GenerateSOAMessage(GetListDocumentFromCROMReqType.class,
 				obj);
 
 		System.out.println(genSOAMsgObj.getRequestmsg());
@@ -223,7 +151,7 @@ public class CallECMDigitizationService {
 	private String printXml(String str) {
 		try {
 			str = str.replaceAll("ns0:", "").replaceAll("ns1:", "").replaceAll("ns2:", "");
-			str = str.replace("xmlns:ns0=\"http://www.bidv.com/global/vn/apps/ecm/ecmdigitizationservice/1.0\"", "");
+			str = str.replace("xmlns:ns0=\"http://www.bidv.com/global/vn/apps/ecm/getlistdocumentfromcrom/1.0\"", "");
 			str = str.replace("xmlns:ns1=\"http://www.bidv.com/common/envelope/commonheader/1.0\"", "");
 			str = str.replace("xmlns:ns2=\"http://www.bidv.com/common/envelope/commonheader/1.0\"", "");
 			Source xmlInput = new StreamSource(new StringReader(str));
