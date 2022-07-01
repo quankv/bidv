@@ -136,7 +136,7 @@ public class CallECMDigitizationService {
 		soa.common.soaReqestReply.CloseSOAConnection();
 
 	}
-	public static String CallECMDigitization(String jsonConfig, String jsonBody) {
+	public static String CallECMDigitization(String jsonConfig, String jsonBody) throws Exception{
 		String response = "";
 		if(jsonConfig != null && !"".equals(jsonConfig) && jsonBody != null && !"".equals(jsonBody) ) {
 			InfoConfigSOA infoConfig = new InfoConfigSOA();
@@ -149,17 +149,14 @@ public class CallECMDigitizationService {
 			}
 
 			CallECMDigitizationService cus = new CallECMDigitizationService();
-			try {
+			
 				String appCode = infoConfig.getAppCode();
 				String deviceId = infoConfig.getDeviceId();
 				String requestId = genReqId(appCode, deviceId);
 				BodyReqEcmDigitizationServiceType body = new BodyReqEcmDigitizationServiceType();
 				body = g.fromJson(jsonBody, BodyReqEcmDigitizationServiceType.class);
 				response = cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body, infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
-			} catch (Exception e) {
-				e.printStackTrace();
-				response = e.getMessage();
-			}
+			
 			soa.common.soaReqestReply.CloseSOAConnection();
 		}
 		return response;

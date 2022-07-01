@@ -97,7 +97,7 @@ public class GetListDocumentCrom {
 
 	}
 
-	public String get(String messID, String soaappcode, String domain, String version, BodyReqGetListDocumentFromCROMType body, String queueName, String soapAction) {
+	public String get(String messID, String soaappcode, String domain, String version, BodyReqGetListDocumentFromCROMType body, String queueName, String soapAction) throws Exception{
 		String response = "";
 		GetListDocumentFromCROMReqType obj = new GetListDocumentFromCROMReqType();
 		HeaderType header = new HeaderType();
@@ -132,14 +132,11 @@ public class GetListDocumentCrom {
 		String soapActionInWSDL = soapAction;//"/Services/Global/Vn/Apps/CARDGW/OperationImpl/CardGW-service.serviceagent//CardDetail";
 		soa.common.SOAResponeObject outputObj = soa.common.soaReqestReply.ProcessSOAService(queueName, soapActionInWSDL,
 				genSOAMsgObj.getRequestmsg(), timeOut); 
-		try {
+		
 			String xml = printXml(outputObj.getResponsemsg());
 			response = XML.toJSONObject(xml).toString();
 			System.out.println("jsonResp\n"+ response);
-		} catch (JSONException e) {
-			response = e.getMessage();
-			e.printStackTrace();
-		}
+		
 		if (outputObj.getErrcode() == 0) {
 			System.out.println("\n\n\nResponse:\n" + printXml(outputObj.getResponsemsg()));
 		} else {

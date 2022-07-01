@@ -61,7 +61,7 @@ public class ApprovalDocument {
 		soa.common.soaReqestReply.CloseSOAConnection();
 
 	}
-	public static String callApproveDocument(String jsonConfig, String jsonBody) {
+	public static String callApproveDocument(String jsonConfig, String jsonBody) throws Exception{
 		String response = "";
 		if(jsonConfig != null && !"".equals(jsonConfig) && jsonBody != null && !"".equals(jsonBody) ) {
 			InfoConfigSOA infoConfig = new InfoConfigSOA();
@@ -74,17 +74,14 @@ public class ApprovalDocument {
 			}
 
 			ApprovalDocument cus = new ApprovalDocument();
-			try {
+			
 				String appCode = infoConfig.getAppCode();
 				String deviceId = infoConfig.getDeviceId();
 				String requestId = genReqId(appCode, deviceId);
 				BodyReqApproveDocumentType body = new BodyReqApproveDocumentType();
 				body = g.fromJson(jsonBody, BodyReqApproveDocumentType.class);
 				response = cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body, infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
-			} catch (Exception e) {
-				e.printStackTrace();
-				response = e.getMessage();
-			}
+			
 			soa.common.soaReqestReply.CloseSOAConnection();
 		}
 		return response;
