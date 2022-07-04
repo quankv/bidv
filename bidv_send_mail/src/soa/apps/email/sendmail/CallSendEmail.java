@@ -136,7 +136,7 @@ public class CallSendEmail {
 		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");
 		infoConfig.setUserConnect("admin");
 		infoConfig.setPassConnect("123456");
-		infoConfig.setAppCode("OMNI");
+		infoConfig.setAppCode("BPM");
 		infoConfig.setDeviceId("CHANNEL");
 		infoConfig.setBusinessDomain("BIDV.COM.VN");
 		infoConfig.setServiceVersion("1.0");
@@ -148,19 +148,16 @@ public class CallSendEmail {
 		}
 		BodyReqSendEmailType body = new BodyReqSendEmailType();
 		body.setAccessToken("");
-		body.setAppCode("OMNI");
+		body.setAppCode("BPM");
 		body.setCheckSum("");
-		body.setRequestID("23432432esde");
+		body.setRequestID("234324323333esde");
 		body.setMailBody("Hello");
-		body.setMailFrom("qlvps@mantisqtud.com");
-		body.setMailFromName("");
+		body.setMailFrom("guimailud1@ldapudtest.com");
+		body.setMailFromName("Quan ly");
 		body.setMailSubject("Test");
-		body.setServiceID("");
-		body.getBccList().addAll(new ArrayList<String>());
-		body.getCcList().addAll(new ArrayList<String>());
-		body.getReplyList().addAll(new ArrayList<String>());
 		ArrayList<String> listTo = new ArrayList<String>();
-		listTo.add("test1@mantisqtud.com");
+		body.setServiceID("1");
+		listTo.add("guimaiud2@ldapudtest.com");
 		body.getToList().addAll(listTo);
 		
 //		Attachments attachmentsType = new Attachments();
@@ -170,7 +167,7 @@ public class CallSendEmail {
 		body.getAttachments().addAll(new ArrayList<Attachments>());
 		CallSendEmail cus = new CallSendEmail();
 		try {
-			String appCode = "OMNI";
+			String appCode = "BPM";
 			String deviceId = "CHANNEL";
 			String requestId = genReqId(appCode, deviceId);
 			cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body);

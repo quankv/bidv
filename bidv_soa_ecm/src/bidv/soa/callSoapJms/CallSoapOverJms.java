@@ -18,8 +18,10 @@ public class CallSoapOverJms {
 		infoConfig.setServiceVersion("1.0");// fix cung
 		infoConfig.setQueueName("vn.lnaccount.1.0");//trong file wsdl
 		infoConfig.setSoapActionInWSDL("/Services/Global/Vn/Loan/LNAccount/OperationImpl/LNAccount.serviceagent//ACFDetail");//trong file wsdl
-//		BodyReqType body = new BodyReqType();
-//		call_api(new Gson().toJson(infoConfig), new Gson().toJson(body), "sibs_LNAccount_ACFDetail");
+		/*
+		 * BodyReqType body = new BodyReqType(); call_api(new Gson().toJson(infoConfig),
+		 * new Gson().toJson(body), "sibs_LNAccount_ACFDetail");
+		 */
 	}
 	public static String call_api(String jsonConfig, String jsonBody, String serviceType) {
 		System.out.println("=============start -- ECM -- call soap over jms================");
