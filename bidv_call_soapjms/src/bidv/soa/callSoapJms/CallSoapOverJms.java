@@ -11,8 +11,8 @@ import bidv.soa.sibs.LNAccount.CreateAcc.CreateAcc;
 import bidv.soa.sibs.LNAccount.DisbValueDateFile.DisbValue;
 import bidv.soa.sibs.LNAccount.LNAccountDeleteAcc.LNAccountDeleteAcc;
 import bidv.soa.sibs.LNAccount.MasterAANoInq.MasterAANoInq;
-import bidv.soa.sibs.remittance.domesticXfer.create.DomesticXfer;
-import bidv.soa.sibs.remittance.internal.create.InternalTransfer;
+import bidv.soa.sibs.remittance.domesticxfer.create.DomesticXfer;
+import bidv.soa.sibs.remittance.internalfundxfer.create.InternalTransfer;
 
 public class CallSoapOverJms {
 	public static void main(String args[]) {

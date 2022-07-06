@@ -29,6 +29,8 @@ import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
 import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
+import bidv.soa.common.sibs.bank.BaseXferType;
+import bidv.soa.sibs.LNAccount.CreateAcc.BodyReqCreateType.Amt;
 
 public class CreateAcc {
 	public static void main(String[] args) {
@@ -43,6 +45,43 @@ public class CreateAcc {
 		infoConfig.setQueueName("vn.lnaccount.1.0");//trong file wsdl
 		infoConfig.setSoapActionInWSDL("global/vn/loan/lnaccount/1.0/createacc");//trong file wsdl
 		BodyReqCreateType body = new BodyReqCreateType();
+		
+		BaseXferType baseXferType = new BaseXferType();
+		baseXferType.setTellerId("990BPM");
+		baseXferType.setSvrBranch("120");
+		body.setBaseXfer(baseXferType);
+		
+		body.setAANo("147006288521000");
+		body.setFacCode("105");
+		body.setFacSeq("1");
+		body.setProductType("NH2KMO0701");
+		Amt amt = new Amt();
+		amt.setLoanAmt("100000000");
+		amt.setCurrCode("VND");
+		
+		body.setMaturityDt("040123");
+		body.setFinalMaturityDt("040123");
+		body.setIntDueDt("040722");
+		body.setIntDueDay("4");
+		body.setFirstPmtDay("4");
+		body.setFirstPmtDt("040722");
+		body.setDrawingLimit("100000000");
+		body.setLoanTerm("6");
+		body.setLoanCode("M");
+		body.setOriginationDate("040722");
+		body.setPmtCode("6");
+		body.setIntPmtFreq("1");
+		body.setIntPmtFreqCode("M");
+		body.setPmtFreq("1");
+		body.setPmtFreqCode("M");
+		body.setInterestRate("0.06");
+		body.setRateReviewDate("041022");
+		body.setRateReviewDay("4");
+		body.setRateReviewTerm("3");
+		body.setRateReviewCode("M");
+		body.setPaymentAmount("33333333");
+		body.setFinalPaymAmt("33333335");
+		body.setIsCalculate("1");
 		
 		
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(), infoConfig.getPassConnect());
@@ -129,6 +168,8 @@ public class CreateAcc {
 		SOAResponeObject outputObj = soaReqestReply.ProcessSOAService(queueName, soapActionInWSDL,
 				genSOAMsgObj.getRequestmsg(), timeOut); 
 		try {
+			System.out.println("outputObj.getResponsemsg(): "+outputObj.getResponsemsg());
+			System.out.println("end ");
 			String xml = printXml(outputObj.getResponsemsg());
 			response = XML.toJSONObject(xml).toString();
 			System.out.println("jsonResp\n"+ response);

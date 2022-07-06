@@ -154,7 +154,7 @@ public class CallSendEmail {
 		body.setMailBody("Hello");
 		body.setMailFrom("guimailud1@ldapudtest.com");
 		body.setMailFromName("Quan ly");
-		body.setMailSubject("Test");
+		body.setMailSubject("Teseeeeeet");
 		ArrayList<String> listTo = new ArrayList<String>();
 		body.setServiceID("1");
 		listTo.add("guimaiud2@ldapudtest.com");

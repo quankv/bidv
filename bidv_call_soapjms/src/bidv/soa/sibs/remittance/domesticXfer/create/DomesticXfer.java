@@ -1,4 +1,4 @@
-package bidv.soa.sibs.remittance.domesticXfer.create;
+package bidv.soa.sibs.remittance.domesticxfer.create;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -22,13 +22,12 @@ import org.json.XML;
 
 import com.google.gson.Gson;
 
-import bidv.soa.common.serviceEnvelope.ClientType;
-import bidv.soa.common.serviceEnvelope.CommonType;
-import bidv.soa.common.serviceEnvelope.HeaderType;
 import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
 import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
+ 
+
 
 public class DomesticXfer {
 	public static void main(String[] args) {
@@ -39,14 +38,76 @@ public class DomesticXfer {
 		infoConfig.setAppCode("BPM");// fix cung
 		infoConfig.setDeviceId("CHANNEL");// k quan trong
 		infoConfig.setBusinessDomain("BIDV.COM.VN");// fix cung
-		infoConfig.setServiceVersion("1.0");// fix cung
+		infoConfig.setServiceVersion("1.1");// fix cung
 		infoConfig.setQueueName("vn.domesticxfer.1.0");// trong file wsdl
-		infoConfig.setSoapActionInWSDL(
-				"global/vn/remittance/domesticxfer/1.0");// trong
+		infoConfig.setSoapActionInWSDL("global/vn/remittance/domesticxfer/1.0");// trong
 																												// file
 																												// wsdl
 		BodyReqCreateType body = new BodyReqCreateType();
-
+		
+		body.setRefNo("280701003");
+		body.setMsgCode("219");//theo bang cau hinh
+		BaseXferType baseXferType = new BaseXferType();
+		baseXferType.setSeq("1329043");
+		baseXferType.setSvrBranch("120");
+		baseXferType.setTellerId("990BPM");
+		body.setBaseXfer(baseXferType);
+		// thong tin nguoi gui
+		AcctInfoType acctType = new AcctInfoType();
+		acctType.setAcctNo("280701003");
+		//acctType.setAcctType("D");
+		acctType.setPayAmt("622679000");
+		acctType.setCurCode("VND");
+		
+		BriefPersonInfoType berCusInfo = new BriefPersonInfoType();
+		berCusInfo.setFullName("Everest 247");
+		berCusInfo.setCIFNo("");
+		
+		CustXferInfoType sendInfo = new CustXferInfoType();
+		sendInfo.setAcctInfo(acctType);
+		sendInfo.setBriefCustInfo(berCusInfo);
+		body.setSenderInfo(sendInfo);
+		
+		//thong tin nguoi nhan
+		AcctInfoType acctType2 = new AcctInfoType();
+		acctType2.setAcctNo("0169822513");
+		acctType2.setBankNo("48304001");
+		acctType2.setPayAmt("622679000");
+		acctType2.setCurCode("VND");
+		
+		BriefPersonInfoType berCusInfo2 = new BriefPersonInfoType();
+		berCusInfo2.setFullName("NGUYEN VAN K");
+		berCusInfo2.setCIFNo("");
+		
+		CustXferInfoType receiveInfo = new CustXferInfoType();
+		receiveInfo.setAcctInfo(acctType2);
+		receiveInfo.setBriefCustInfo(berCusInfo2);
+		body.setReceiverInfo(receiveInfo);
+		
+		MedialBankInfoType mediaBank = new MedialBankInfoType();
+		mediaBank.setAcctNo("");
+		mediaBank.setBankNo("48304001");
+		mediaBank.setBranchNo("48304001");
+		body.setMedialBankInfo(mediaBank);
+		
+		AmtType2 amt = new AmtType2();
+		amt.setAmt("5000");
+		amt.setCurCode("VND");
+		body.setAmt(amt);
+		
+		FeeInfoType feeInfo= new FeeInfoType();
+		feeInfo.setAmtFee("0");
+		feeInfo.setFeeType("O");
+		feeInfo.setCurCode("VND");;
+		body.setFeeInfo(feeInfo);
+		
+		VATInfo vatInfo = new VATInfo();
+		vatInfo.setVATAmt("0");
+		vatInfo.setVATCode("VND");
+		body.setVATInfo(vatInfo);
+		
+		body.setRemark("CK ngoai ngan hang");
+		body.setRMNo("SL");
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(),
 				infoConfig.getPassConnect());
 		if (errcode != 0) {

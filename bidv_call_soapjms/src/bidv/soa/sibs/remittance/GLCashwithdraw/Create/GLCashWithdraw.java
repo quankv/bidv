@@ -30,6 +30,7 @@ import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
 
+
 public class GLCashWithdraw {
 	public static void main(String[] args) {
 		InfoConfigSOA infoConfig = new InfoConfigSOA();
@@ -46,7 +47,32 @@ public class GLCashWithdraw {
 																												// file
 																												// wsdl
 		BodyReqCreateType body = new BodyReqCreateType();
-
+		body.setMsgCode("295");
+		BaseXferType baseXferType = new BaseXferType();
+		baseXferType.setSeq("1329043");
+		baseXferType.setSvrBranch("120");//Chi nhánh thực hiện giao dịch
+		baseXferType.setTellerId("990BPM");
+		body.setBaseXfer(baseXferType);
+		
+		SenderInfoType sendInfo = new SenderInfoType();
+		sendInfo.setCashAmount("10000000");//Số tiền mặt chuyển vào tài khoản GL (Phải là số chẵn vì là tiền mặt)
+		sendInfo.setCurCode("VND");//Tiền tệ nộp vào tài khoản GL
+		sendInfo.setNoteSellRate("1");//Tỉ giá của tiền nộp vào tài khoản GL
+		sendInfo.setTTBuyRate("1");//Tỉ giá quy đổi ngoại tệ còn thiếu ra tiền VND, áp dụng cho nộp ngoại tệ
+		sendInfo.setVNDAmount("0");//Số tiền VND còn phải nộp thêm, áp dụng cho trường hợp nộp ngoại tệ
+		body.setSenderInfo(sendInfo);
+		
+		
+		ReceiverInfoType receiveInfo = new ReceiverInfoType();
+		receiveInfo.setCurCode("VND");//Loại tiền tệ của tài khoản GL
+		receiveInfo.setDRAmount("10000000");//Số tiền cần chuyển vào tài khoản GL (Có thể là số lẻ)
+		receiveInfo.setGLAcctNo("280701003");//Số Tài khoản GL nhận tiền
+		receiveInfo.setTTBuyRate("1");//Tỉ giá tiền tệ so với VND (Tiền tệ của tài khoản GL)
+		body.setReceiverInfo(receiveInfo);
+		
+		body.setRemark("test");
+		
+		
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(),
 				infoConfig.getPassConnect());
 		if (errcode != 0) {
