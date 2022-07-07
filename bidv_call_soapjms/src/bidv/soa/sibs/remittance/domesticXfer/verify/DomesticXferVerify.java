@@ -1,4 +1,4 @@
-package bidv.soa.sibs.remittance.domesticxfer.create;
+package bidv.soa.sibs.remittance.domesticxfer.verify;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -29,7 +29,7 @@ import bidv.soa.common.serviceEnvelope.soaReqestReply;
  
 
 
-public class DomesticXfer {
+public class DomesticXferVerify {
 	public static void main(String[] args) {
 		InfoConfigSOA infoConfig = new InfoConfigSOA();
 		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");// fix cung
@@ -40,73 +40,12 @@ public class DomesticXfer {
 		infoConfig.setBusinessDomain("BIDV.COM.VN");// fix cung
 		infoConfig.setServiceVersion("1.0");// fix cung
 		infoConfig.setQueueName("vn.domesticxfer.1.0");// trong file wsdl
-		infoConfig.setSoapActionInWSDL("global/vn/remittance/domesticxfer/1.0");// trong
+		infoConfig.setSoapActionInWSDL("/Services/Global/Vn/Remittance/DomesticXfer/OperationImpl/DomesticXfer-service3.serviceagent/PortTypeEndpoint3/Verify");// trong
 																												// file
 																												// wsdl
-		BodyReqCreateType body = new BodyReqCreateType();
+		BodyReqVerifyType body = new BodyReqVerifyType();
+		body.setMessageId("1657163284552");
 		
-		body.setRefNo("280701003");
-		body.setMsgCode("203");//theo bang cau hinh
-		BaseXferType baseXferType = new BaseXferType();
-		baseXferType.setSeq("933061");
-		baseXferType.setSvrBranch("120");
-		baseXferType.setTellerId("990TTHDOL");
-		body.setBaseXfer(baseXferType);
-		// thong tin nguoi gui
-		AcctInfoType acctType = new AcctInfoType();
-		acctType.setAcctNo("12010000556668");
-		acctType.setAcctType("D");
-		acctType.setPayAmt("1400000000");
-		acctType.setCurCode("VND");
-		
-		BriefPersonInfoType berCusInfo = new BriefPersonInfoType();
-		berCusInfo.setFullName("Everest 247");
-		berCusInfo.setCIFNo("");
-		
-		CustXferInfoType sendInfo = new CustXferInfoType();
-		sendInfo.setAcctInfo(acctType);
-		sendInfo.setBriefCustInfo(berCusInfo);
-		body.setSenderInfo(sendInfo);
-		
-		//thong tin nguoi nhan
-		AcctInfoType acctType2 = new AcctInfoType();
-		acctType2.setAcctNo("9704060129837294");
-		acctType2.setBankNo("48304001");
-		acctType2.setPayAmt("1400000000");
-		acctType2.setCurCode("VND");
-		
-		BriefPersonInfoType berCusInfo2 = new BriefPersonInfoType();
-		berCusInfo2.setFullName("NGUYEN VAN K");
-		
-		CustXferInfoType receiveInfo = new CustXferInfoType();
-		receiveInfo.setAcctInfo(acctType2);
-		receiveInfo.setBriefCustInfo(berCusInfo2);
-		body.setReceiverInfo(receiveInfo);
-		
-		MedialBankInfoType mediaBank = new MedialBankInfoType();
-		mediaBank.setAcctNo("");
-		mediaBank.setBankNo("48304001");
-		mediaBank.setBranchNo("48304001");
-		body.setMedialBankInfo(mediaBank);
-		
-		AmtType2 amt = new AmtType2();
-		amt.setAmt("1400000000");
-		amt.setCurCode("VND");
-		body.setAmt(amt);
-		
-		FeeInfoType feeInfo= new FeeInfoType();
-		feeInfo.setAmtFee("0");
-		feeInfo.setFeeType("O");
-		feeInfo.setCurCode("VND");;
-		body.setFeeInfo(feeInfo);
-		
-		VATInfo vatInfo = new VATInfo();
-		vatInfo.setVATAmt("0");
-		vatInfo.setVATCode("VND");
-		body.setVATInfo(vatInfo);
-		
-		body.setRemark("CK ngoai ngan hang");
-		body.setRMNo("SL");
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(),
 				infoConfig.getPassConnect());
 		if (errcode != 0) {
@@ -114,7 +53,7 @@ public class DomesticXfer {
 			return;
 		}
 
-		DomesticXfer cus = new DomesticXfer();
+		DomesticXferVerify cus = new DomesticXferVerify();
 		try {
 			String appCode = infoConfig.getAppCode();
 			String deviceId = infoConfig.getDeviceId();
@@ -140,13 +79,13 @@ public class DomesticXfer {
 				System.out.println("Error connect JMS");
 				return "Error connect JMS";
 			}
-			DomesticXfer cus = new DomesticXfer();
+			DomesticXferVerify cus = new DomesticXferVerify();
 
 			String appCode = infoConfig.getAppCode();
 			String deviceId = infoConfig.getDeviceId();
 			String requestId = genReqId(appCode, deviceId);
-			BodyReqCreateType body = new BodyReqCreateType();
-			body = g.fromJson(jsonBody, BodyReqCreateType.class);
+			BodyReqVerifyType body = new BodyReqVerifyType();
+			body = g.fromJson(jsonBody, BodyReqVerifyType.class);
 			response = cus.get(requestId, appCode, infoConfig.getBusinessDomain(), infoConfig.getServiceVersion(), body,
 					infoConfig.getQueueName(), infoConfig.getSoapActionInWSDL());
 
@@ -160,7 +99,7 @@ public class DomesticXfer {
 
 	}
 
-	public String get(String messID, String soaappcode, String domain, String version, BodyReqCreateType body,
+	public String get(String messID, String soaappcode, String domain, String version, BodyReqVerifyType body,
 			String queueName, String soapActionInWSDL) {
 		String response = "";
 		DomesticXferReqType obj = new DomesticXferReqType();
@@ -184,7 +123,7 @@ public class DomesticXfer {
 		header.setCommon(common);
 		header.setClient(client);
 		obj.setHeader(header);
-		obj.setBodyReqCreate(body);
+		obj.setBodyReqVerify(body);
 
 		SOARequestObject genSOAMsgObj = soaReqestReply.GenerateSOAMessage(DomesticXferReqType.class, obj);
 

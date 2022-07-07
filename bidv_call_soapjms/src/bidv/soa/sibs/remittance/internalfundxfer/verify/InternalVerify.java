@@ -44,7 +44,7 @@ public class InternalVerify {
 																												// wsdl
 		BodyReqVerifyType body = new BodyReqVerifyType();
 		
-		
+		body.setMessageId("1657162000135");
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(),
 				infoConfig.getPassConnect());
 		if (errcode != 0) {
