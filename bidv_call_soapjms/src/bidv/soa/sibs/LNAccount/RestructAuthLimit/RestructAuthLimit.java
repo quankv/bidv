@@ -22,14 +22,12 @@ import org.json.XML;
 
 import com.google.gson.Gson;
 
-import bidv.soa.common.serviceEnvelope.ClientType;
-import bidv.soa.common.serviceEnvelope.CommonType;
-import bidv.soa.common.serviceEnvelope.HeaderType;
 import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
 import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
-import bidv.soa.common.sibs.bank.BaseXferType;
+
+
 
 public class RestructAuthLimit {
 	public static void main(String[] args) {

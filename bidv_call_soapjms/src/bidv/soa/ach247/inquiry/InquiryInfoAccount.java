@@ -22,20 +22,19 @@ import org.json.XML;
 
 import com.google.gson.Gson;
 
-import bidv.soa.common.serviceEnvelope.ClientType;
-import bidv.soa.common.serviceEnvelope.CommonType;
-import bidv.soa.common.serviceEnvelope.HeaderType;
 import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
 import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
 
+ 
+
 public class InquiryInfoAccount {
 	public static void main(String[] args) {
 		InfoConfigSOA infoConfig = new InfoConfigSOA();
-		infoConfig.setUrlConnect("tcp://10.53.19.15:7222");//fix cung
+		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");//fix cung
 		infoConfig.setUserConnect("admin");//fix cung
-		infoConfig.setPassConnect("");// fix cung
+		infoConfig.setPassConnect("123456");// fix cung
 		infoConfig.setAppCode("BPM");// fix cung
 		infoConfig.setDeviceId("CHANNEL");// k quan trong
 		infoConfig.setBusinessDomain("BIDV.COM.VN");// fix cung
@@ -44,13 +43,20 @@ public class InquiryInfoAccount {
 		infoConfig.setSoapActionInWSDL("http://www.bidv.com/global/vn/apps/ach/inquiry");//trong file wsdl
 		BodyReqACHInquiryType body = new BodyReqACHInquiryType();
 		body.setAppCode("BPM"); 
+		body.setAccessToken("");
+		body.setChecksum("");
 		body.setProductChannel("04");
 		body.setSenderAccount("99999999999999");
+		body.setSenderAccountType("20");
+		body.setSenderAddress("");
+		body.setSenderBank("970406");
+		body.setSenderBankName("");
 		body.setSenderName("INQUIRY");
 		body.setReceiverBank("970406");
 		body.setReceiverAccount("0129837294");
 		body.setReceiverAccountType("20");
 		body.setLanguage("VI");
+		body.setRequestId("4234234234");
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(), infoConfig.getPassConnect());
 		if (errcode != 0) {
 			System.out.println("Error connect JMS");

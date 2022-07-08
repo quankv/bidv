@@ -22,20 +22,18 @@ import org.json.XML;
 
 import com.google.gson.Gson;
 
-import bidv.soa.common.serviceEnvelope.ClientType;
-import bidv.soa.common.serviceEnvelope.CommonType;
-import bidv.soa.common.serviceEnvelope.HeaderType;
 import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
 import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
 
+
 public class MasterAANoInq {
 	public static void main(String[] args) {
 		InfoConfigSOA infoConfig = new InfoConfigSOA();
-		infoConfig.setUrlConnect("tcp://10.53.19.15:7222");//fix cung
+		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");//fix cung
 		infoConfig.setUserConnect("admin");//fix cung
-		infoConfig.setPassConnect("");// fix cung
+		infoConfig.setPassConnect("123456");// fix cung
 		infoConfig.setAppCode("BPM");// fix cung
 		infoConfig.setDeviceId("CHANNEL");// k quan trong
 		infoConfig.setBusinessDomain("BIDV.COM.VN");// fix cung

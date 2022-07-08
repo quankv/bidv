@@ -22,22 +22,19 @@ import org.json.XML;
 
 import com.google.gson.Gson;
 
-import bidv.soa.common.serviceEnvelope.ClientType;
-import bidv.soa.common.serviceEnvelope.CommonType;
-import bidv.soa.common.serviceEnvelope.HeaderType;
 import bidv.soa.common.serviceEnvelope.InfoConfigSOA;
 import bidv.soa.common.serviceEnvelope.SOARequestObject;
 import bidv.soa.common.serviceEnvelope.SOAResponeObject;
 import bidv.soa.common.serviceEnvelope.soaReqestReply;
-import bidv.soa.common.sibs.bank.BaseXferType;
 import bidv.soa.sibs.LNAccount.CreateAcc.BodyReqCreateType.Amt;
+ 
 
 public class CreateAcc {
 	public static void main(String[] args) {
 		InfoConfigSOA infoConfig = new InfoConfigSOA();
-		infoConfig.setUrlConnect("tcp://10.53.19.15:7222");//fix cung
+		infoConfig.setUrlConnect("tcp://10.53.120.15:7222");//fix cung
 		infoConfig.setUserConnect("admin");//fix cung
-		infoConfig.setPassConnect("");// fix cung
+		infoConfig.setPassConnect("123456");// fix cung
 		infoConfig.setAppCode("BPM");// fix cung
 		infoConfig.setDeviceId("CHANNEL");// k quan trong
 		infoConfig.setBusinessDomain("BIDV.COM.VN");// fix cung
@@ -58,8 +55,8 @@ public class CreateAcc {
 		Amt amt = new Amt();
 		amt.setLoanAmt("100000000");
 		amt.setCurrCode("VND");
-		
-		body.setMaturityDt("040123");
+		body.setAmt(amt);
+		body.setMaturityDt("04/07/2022");
 		body.setFinalMaturityDt("040123");
 		body.setIntDueDt("040722");
 		body.setIntDueDay("4");
@@ -82,7 +79,6 @@ public class CreateAcc {
 		body.setPaymentAmount("33333333");
 		body.setFinalPaymAmt("33333335");
 		body.setIsCalculate("1");
-		
 		
 		int errcode = soaReqestReply.InitSOAConnection(infoConfig.getUrlConnect(), infoConfig.getUserConnect(), infoConfig.getPassConnect());
 		if (errcode != 0) {
